@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <title>Web Conference</title>
+    <link rel="stylesheet" href="../_shared/style.css">
+  </head>
+  <body>
+
+    <div id="first" class="first">
+
+      <div class="welcome">Welcome</div>
+      <input type="text" placeholder="ユーザー名" id="js-username">
+      <input type="text" placeholder="ルーム名" id="js-room-id">
+      <button id="js-ok-trigger">OK</button>
+
+      <div class="select">
+        <label for="audio-source">マイク :  </label>
+        <select id="audio-source">
+        </select>
+      </div>
+  
+      <div class="select">
+        <label for="video-source">カメラ :  </label>
+        <select id="video-source">
+        </select>
+      </div>
+
+    </div>
+
+
+    <div class="room">
+
+      <div class="remote-streams" id="js-remote-streams">
+        <button id="js-join-trigger">参加</button>
+      </div>
+
+      <div>
+        <video id="js-local-stream"></video>
+        <pre class="messages" id="js-messages"></pre>
+      </div>
+      
+    </div>
+    
+
+    <div class="bottom-bar">
+
+      <button id="js-leave-trigger">退出</button>
+
+      <div class="media-options">
+        <button id="js-toggle-camera">カメラを<span id="camera-status"></span>にする</button>
+        <button id="js-toggle-microphone">マイクを<span id="microphone-status"></span>にする</button>
+      </div>
+
+      <div class="volume">
+        <p>音の距離</p>
+        <input type="range" value="5" min="5" max="20" step="0.5" id="js-toggle-volume">
+      </div>
+
+      <div class="volume">
+        <p>小さな会話の位置</p>
+        <input type="range" value="5" min="-5" max="5" step="0.5" id="p2p-volume">
+      </div>
+
+      <div class="room2" id="room2">
+        <pre class="ss-id" id="ss-id"></pre>
+        <button id="p2p-close-trigger">切断</button>
+      </div>
+
+      <div class="chat">
+        <textarea placeholder="テキストチャット" id="js-local-text"></textarea>
+        <button id="js-send-trigger">送信</button>
+      </div>
+
+    </div>
+
+
+    <script src="//cdn.webrtc.ecl.ntt.com/skyway-4.4.1.js"></script>
+    <script src="../_shared/key.js"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>

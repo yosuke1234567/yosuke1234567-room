@@ -1,0 +1,245 @@
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #222;
+  font-family: "Segoe UI", "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro", "Yu Gothic Medium", "游ゴシック Medium", "YuGothic", "游ゴシック体", "メイリオ", sans-serif;
+}
+
+input, button, textarea, pre {
+  font-family: "Segoe UI", "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro", "Yu Gothic Medium", "游ゴシック Medium", "YuGothic", "游ゴシック体", "メイリオ", sans-serif;
+  font-size: 0.85rem;
+}
+
+button{
+  cursor: pointer;
+}
+button:active {
+  transform: translateY(1px);
+}
+
+.first {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, .9);
+  z-index: 1;
+}
+
+.welcome {
+  font-size: 1.5rem;
+  color: #fff;
+  margin: 8px auto;
+}
+
+.first > input {
+  height: 36px;
+  width: 200px;
+  margin: 10px auto;
+}
+
+.first > button {
+  background-color: #4a4;
+  height: 36px;
+  width: 200px;
+  border: 0;
+  border-radius: 3px;
+  margin: 20px auto 80px;
+  color: #fff;
+}
+
+.select {
+  color: #fff;
+  margin: 5px auto;
+}
+
+select {
+  width: 250px;
+  padding: 3px;
+}
+
+#js-join-trigger {
+  background-color: #4a4;
+  font-size: 1.5rem;
+  width: 200px;
+  border: 0;
+  border-radius: 10px;
+  margin: 0 auto;
+  padding: 20px;
+  color: #fff;
+}
+
+#js-leave-trigger {
+  background-color: #f44;
+  height: 36px;
+  border: 0;
+  border-radius: 3px;
+  margin: 0;
+  padding: 0 24px;
+  color: #fff;
+}
+
+.room {
+  min-width: 960px;
+  display: grid;
+  grid-template-columns: 80% 20%;
+  margin: 24px 8px;
+  gap: 8px;
+}
+
+.remote-streams {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(30%, 1fr));
+  align-items: center;
+  background-color: #111;
+  gap: 8px;
+  padding: 10px;
+  box-sizing: border-box;
+  color: #111;
+  text-align: center;
+}
+
+.remote-container {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 5px;
+  line-height: 1.5;
+  background-color: #ddd;
+  position: relative;
+}
+
+.remote-container > video {
+  width: 100%;
+}
+
+.p2p-start {
+  visibility: hidden;
+  opacity: 0;
+  width: 50%;
+  padding: 8px 0;
+  margin: 0 auto;
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 50px;
+  border: 0;
+  border-radius: 8px;
+  background-color: #eee;
+  color: #040404;
+  transition: opacity 0.2s;
+}
+
+.p2p-start:hover {
+  background-color: #c0c0c0;
+}
+
+.remote-container:hover .p2p-start {
+  visibility: visible;
+  opacity: 1;
+}
+
+#js-local-stream {
+  width: 100%;
+  transform: scale(-1, 1);
+}
+
+.messages {
+  background-color: #eee;
+  min-height: 100px;
+  padding: 8px;
+  height: 280px;
+  margin: 1px 0;
+}
+
+.msg-name {
+  color: #555;
+  font-size: .8em;
+}
+
+pre {
+  white-space: pre-wrap;
+  word-break: break-all;
+  overflow-y: scroll;
+  text-align: left;
+}
+
+.room2 {
+  display: flex;
+  margin-left: auto;
+}
+
+.room2 button {
+  width: 48px;
+  margin: auto 2px;
+}
+
+.ss-id {
+  text-align: left;
+  width: 210px;
+  height: 36px;
+  background-color: #333;
+  margin: auto 4px;
+  padding: 6px 8px;
+  word-break: break-all;
+  line-height: normal;
+}
+
+#p2p-close-trigger {
+  display: none;
+}
+
+.bottom-bar {
+  background-color: #444;
+  position: fixed;
+  bottom: 0;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 960px;
+  max-height: 100px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  line-height: 0;
+  text-align: center;
+  color: #fff;
+}
+
+.media-options {
+  margin: 0 16px;
+  position: relative;
+  z-index: 1;
+}
+
+#js-toggle-camera, #js-toggle-microphone {
+  height: 36px;
+  margin: 0;
+  width: 150px;
+}
+
+.volume {
+  margin: auto 16px;
+  padding-bottom: 4px;
+}
+
+.chat {
+  display: flex;
+  margin: 0 32px 0 auto;
+}
+
+.chat > textarea {
+  height: 34px;
+  width: 190px;
+  resize: none;
+  margin: auto 4px;
+  padding: 0;
+}
