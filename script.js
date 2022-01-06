@@ -137,7 +137,7 @@ async function main() {
     }
 
     const room = peer.joinRoom(roomId.value, {
-      mode: 'mesh',
+      mode: 'sfu',
       stream: localStream,
     });
 
