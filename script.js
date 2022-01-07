@@ -81,7 +81,13 @@ async function main() {
   const localStream = await navigator.mediaDevices
     .getUserMedia({
       audio: {deviceId: {exact: audioSource.value}},
-      video: {deviceId: {exact: videoSource.value}, width: 426, height: 240, frameRate: 30}
+      video: {
+        deviceId: {exact: videoSource.value},
+        width: {max: 426},
+        height: {max: 240},
+        frameRate: {max: 15},
+        aspectRatio: {ideal: 1.7777777778}
+      }
     })
     .catch(console.error);
 
@@ -140,7 +146,6 @@ async function main() {
     const room = peer.joinRoom(roomId.value, {
       mode: 'sfu',
       stream: localStream,
-      videoBandwidth: 500,
     });
 
     room.once('open', () => {
