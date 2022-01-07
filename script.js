@@ -81,7 +81,7 @@ async function main() {
   const localStream = await navigator.mediaDevices
     .getUserMedia({
       audio: {deviceId: {exact: audioSource.value}},
-      video: {deviceId: {exact: videoSource.value}, width: 426, height: 240, frameRate: 10}
+      video: {deviceId: {exact: videoSource.value}, width: 426, height: 240, frameRate: 30}
     })
     .catch(console.error);
 
