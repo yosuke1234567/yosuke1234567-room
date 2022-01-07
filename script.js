@@ -83,9 +83,9 @@ async function main() {
       audio: {deviceId: {exact: audioSource.value}},
       video: {
         deviceId: {exact: videoSource.value},
-        width: {max: 426},
-        height: {max: 240},
-        frameRate: {max: 15},
+        width: {min: 320, ideal: 426, max: 640},
+        height: {min: 180, ideal: 240, max: 360},
+        frameRate: {min: 8, ideal: 15, max: 24},
         aspectRatio: {ideal: 1.7777777778}
       }
     })
