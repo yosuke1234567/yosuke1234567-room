@@ -138,10 +138,9 @@ async function main() {
     }
 
     const room = peer.joinRoom(roomId.value, {
-      mode: 'mesh',
+      mode: 'sfu',
       stream: localStream,
       videoBandwidth: 500,
-      videoCodec: 'VP9',
     });
 
     room.once('open', () => {
