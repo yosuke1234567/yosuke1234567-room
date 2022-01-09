@@ -85,7 +85,7 @@ async function main() {
         deviceId: {exact: videoSource.value},
         width: {min: 320, ideal: 426, max: 640},
         height: {min: 180, ideal: 240, max: 360},
-        frameRate: {min: 8, ideal: 15, max: 24},
+        frameRate: {min: 8, ideal: 15, max: 30},
         aspectRatio: {ideal: 1.7777777778}
       }
     })
