@@ -54,14 +54,15 @@ button:active {
   color: #fff;
 }
 
-.select {
+.av-select {
   color: #fff;
   margin: 5px auto;
 }
 
-select {
+.av-select > select {
   width: 250px;
   padding: 3px;
+  margin-left: 4px;
 }
 
 #js-join-trigger {
@@ -80,7 +81,7 @@ select {
   height: 36px;
   border: 0;
   border-radius: 3px;
-  margin: 0;
+  margin-left: 16px;
   padding: 0 24px;
   color: #fff;
 }
@@ -171,28 +172,6 @@ pre {
   overflow-y: scroll;
   text-align: left;
 }
-
-.room2 {
-  display: flex;
-  margin-left: auto;
-}
-
-.room2 button {
-  width: 48px;
-  margin: auto 2px;
-}
-
-.ss-id {
-  text-align: left;
-  width: 210px;
-  height: 36px;
-  background-color: #333;
-  margin: auto 4px;
-  padding: 6px 8px;
-  word-break: break-all;
-  line-height: normal;
-}
-
 #p2p-close-trigger {
   display: none;
 }
@@ -216,7 +195,7 @@ pre {
 }
 
 .media-options {
-  margin: 0 16px;
+  margin: 0 auto;
   position: relative;
   z-index: 1;
 }
@@ -228,13 +207,39 @@ pre {
 }
 
 .volume {
-  margin: auto 16px;
-  padding-bottom: 4px;
+  margin: 0 auto;
+}
+
+.volume > select {
+  padding: 3px 6px;
+  margin-left: 4px;
+}
+
+.p2p-area {
+  display: flex;
+  margin: 0 auto;
+  width: 284px;
+}
+
+.p2p-area > button {
+  height: 36px;
+  margin: auto 2px;
+}
+
+#p2p-log {
+  text-align: left;
+  width: 210px;
+  height: 36px;
+  background-color: #333;
+  margin: auto 4px;
+  padding: 6px 8px;
+  word-break: break-all;
+  line-height: normal;
 }
 
 .chat {
   display: flex;
-  margin: 0 32px 0 auto;
+  margin: 0 16px 0 auto;
 }
 
 .chat > textarea {
