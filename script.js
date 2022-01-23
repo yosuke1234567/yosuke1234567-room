@@ -155,7 +155,7 @@ async function main() {
     const room = peer.joinRoom(roomId.value, {
       mode: 'mesh',
       stream: localStream,
-      audioCodec: 'G722',
+      audioCodec: 'opus',
       videoCodec: 'VP9'
     });
 
@@ -214,7 +214,7 @@ async function main() {
       
       // P2P 発信処理
       p2pStartTrigger.addEventListener('click', () => {
-        const mediaConnection = peer.call(stream.peerId, localStream2, {audioCodec: 'G722'}); //発信
+        const mediaConnection = peer.call(stream.peerId, localStream2, {audioCodec: 'opus'}); //発信
 
         p2pStartTrigger.style.display = 'none';
         p2pCloseTrigger.style.display = 'inline';
