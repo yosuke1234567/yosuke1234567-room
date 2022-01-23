@@ -77,6 +77,8 @@ async function main() {
   const sendTrigger = document.getElementById('js-send-trigger');
   const messages = document.getElementById('js-messages');
   const soundSettings = document.getElementById('js-sound-settings');
+  const p2pCloseTrigger = document.getElementById('p2p-close-trigger');
+  const p2pLog = document.getElementById('p2p-log');
 
   const localStream = await navigator.mediaDevices
     .getUserMedia({
@@ -134,6 +136,7 @@ async function main() {
 
   // Register join handler
   joinTrigger.addEventListener('click', () => {
+    const audioCtx = new AudioContext();
     joinTrigger.style.display = 'none'
     leaveTrigger.style.visibility = 'visible'
     // Note that you need to ensure the peer has connected to signaling server
@@ -177,11 +180,11 @@ async function main() {
       newVideo.setAttribute('data-peer-id', stream.peerId);
       newContainer.appendChild(newVideo); //newContainerの中に追加
 
-      const audioCtx = new AudioContext();
       const panner = audioCtx.createPanner(); //立体音響のAudioNodeを作成
       const source = audioCtx.createMediaStreamSource(stream); //MediaStreamSource = 受信したstream
 
       panner.distanceModel = 'linear';
+      panner.panningModel = 'HRTF';
       panner.positionZ.value = -1000; //前方向
 
       source.connect(panner);
@@ -200,20 +203,13 @@ async function main() {
       // 音量変更
 
 
-      ////サブストリーム////
+      //P2P用
       const p2pStartTrigger = document.createElement('button');
       p2pStartTrigger.textContent = '話しかける';
       p2pStartTrigger.setAttribute('class', 'p2p-start');
       newContainer.appendChild(p2pStartTrigger);
-
-      const p2pCloseTrigger = document.getElementById('p2p-close-trigger')
-      const p2pLog = document.getElementById('p2p-log');
-
-      const soundOptionX = [    0,  707, -707, -1000,    0,  707, -707, 1000];
-      const soundOptionZ = [-1000, -707,  707,     0, 1000,  707, -707,    0];
-      //                      前,  右前,  左後,   左,    後,  右後, 左前,  右
       
-      //発信処理
+      // P2P 発信処理
       p2pStartTrigger.addEventListener('click', () => {
         const mediaConnection = peer.call(stream.peerId, localStream2); //発信
 
@@ -237,49 +233,51 @@ async function main() {
           p2pStartTrigger.style.display = 'inline';
         });
       });
-      
-      //着信処理
-      peer.on('call', (mediaConnection) => {
-        mediaConnection.answer(localStream3);
-
-        mediaConnection.on('stream', async stream => {
-          const panner2 = audioCtx.createPanner();
-          const source2 = audioCtx.createMediaStreamSource(stream);
-
-          panner2.distanceModel = 'linear';
-          panner2.panningModel = 'HRTF';
-          panner2.positionX.value = soundOptionX[soundSettings.value];
-          panner2.positionZ.value = soundOptionZ[soundSettings.value];
-
-          source2.connect(panner2);
-          panner2.connect(audioCtx.destination);
-
-          soundSettings.addEventListener('change', () => {
-            panner2.positionX.value = soundOptionX[soundSettings.value];
-            panner2.positionZ.value = soundOptionZ[soundSettings.value];
-          });
-          
-          p2pCloseTrigger.style.display = 'inline';
-          p2pLog.textContent += `着信 : ${mediaConnection.remoteId}\n`;
-          p2pLog.scrollBy(0, 100);
-  
-          mediaConnection.once('close', () => {
-            p2pLog.textContent += `通話終了 : ${mediaConnection.remoteId}\n`;
-            p2pLog.scrollBy(0, 100);
-            p2pStartTrigger.style.display = 'inline';
-          });
-          p2pCloseTrigger.addEventListener('click', () => {
-            mediaConnection.close(true);
-            p2pCloseTrigger.style.display = 'none';
-            p2pStartTrigger.style.display = 'inline';
-          });
-        });
-      });
-      /////サブストリーム ここまで//////
 
     });
-    ////
+    //// 他のユーザーのストリームを受信した時 ここまで
+    
+    // 音の方向の設定        前,  右前,  左後,   左,    後,  右後, 左前,  右
+    const soundOptionX = [    0,  707, -707, -1000,    0,  707, -707, 1000];
+    const soundOptionZ = [-1000, -707,  707,     0, 1000,  707, -707,    0];
 
+    // P2P 着信処理
+    peer.on('call', (mediaConnection) => {
+      mediaConnection.answer(localStream3);
+
+      mediaConnection.on('stream', async stream => {
+        const panner2 = audioCtx.createPanner();
+        const source2 = audioCtx.createMediaStreamSource(stream);
+
+        panner2.distanceModel = 'linear';
+        panner2.panningModel = 'HRTF';
+        panner2.positionX.value = soundOptionX[soundSettings.value];
+        panner2.positionZ.value = soundOptionZ[soundSettings.value];
+
+        source2.connect(panner2);
+        panner2.connect(audioCtx.destination);
+
+        soundSettings.addEventListener('change', () => {
+          panner2.positionX.value = soundOptionX[soundSettings.value];
+          panner2.positionZ.value = soundOptionZ[soundSettings.value];
+        });
+        
+        p2pCloseTrigger.style.display = 'inline';
+        p2pLog.textContent += `着信 : ${mediaConnection.remoteId}\n`;
+        p2pLog.scrollBy(0, 100);
+
+        mediaConnection.once('close', () => {
+          p2pLog.textContent += `通話終了 : ${mediaConnection.remoteId}\n`;
+          p2pLog.scrollBy(0, 100);
+          p2pStartTrigger.style.display = 'inline';
+        });
+        p2pCloseTrigger.addEventListener('click', () => {
+          mediaConnection.close(true);
+          p2pCloseTrigger.style.display = 'none';
+          p2pStartTrigger.style.display = 'inline';
+        });
+      });
+    });
 
     //テキストメッセージ受信
     room.on('data', ({ data, src }) => {
