@@ -71,7 +71,6 @@ var peer = okTrigger.addEventListener('click', () => {
 
 
 async function main() {
-  const audioCtx = new AudioContext(); // AudioContextを作成
   const localVideo = document.getElementById('js-local-stream');
   const remoteVideos = document.getElementById('js-remote-streams');
   const localText = document.getElementById('js-local-text');
@@ -135,6 +134,13 @@ async function main() {
   })
   .catch(console.error);
 
+  const audioCtx = new AudioContext(); // AudioContextを作成
+  const panner = audioCtx.createPanner(); //立体音響のAudioNodeを作成
+
+  panner.distanceModel = 'linear';
+  panner.panningModel = 'HRTF';
+  panner.positionZ.value = -1000; //前方向
+
   // Register join handler
   joinTrigger.addEventListener('click', () => {
     joinTrigger.style.display = 'none'
@@ -147,8 +153,10 @@ async function main() {
     }
 
     const room = peer.joinRoom(roomId.value, {
-      mode: 'sfu',
+      mode: 'mesh',
       stream: localStream,
+      audioCodec: 'G722',
+      videoCodec: 'VP9'
     });
 
     room.once('open', () => {
@@ -180,12 +188,7 @@ async function main() {
       newVideo.setAttribute('data-peer-id', stream.peerId);
       newContainer.appendChild(newVideo); //newContainerの中に追加
 
-      const panner = audioCtx.createPanner(); //立体音響のAudioNodeを作成
       const source = audioCtx.createMediaStreamSource(stream); //MediaStreamSource = 受信したstream
-
-      panner.distanceModel = 'linear';
-      panner.panningModel = 'HRTF';
-      panner.positionZ.value = -1000; //前方向
 
       source.connect(panner);
       panner.connect(audioCtx.destination);
@@ -211,7 +214,7 @@ async function main() {
       
       // P2P 発信処理
       p2pStartTrigger.addEventListener('click', () => {
-        const mediaConnection = peer.call(stream.peerId, localStream2); //発信
+        const mediaConnection = peer.call(stream.peerId, localStream2, {audioCodec: 'G722'}); //発信
 
         p2pStartTrigger.style.display = 'none';
         p2pCloseTrigger.style.display = 'inline';
@@ -237,7 +240,7 @@ async function main() {
     });
     //// 他のユーザーのストリームを受信した時 ここまで
     
-    // 音の方向の設定        前,  右前,  左後,   左,    後,  右後, 左前,  右
+    // 音の方向の設定        前,   右前,  左後,   左,   後,  右後, 左前,  右
     const soundOptionX = [    0,  707, -707, -1000,    0,  707, -707, 1000];
     const soundOptionZ = [-1000, -707,  707,     0, 1000,  707, -707,    0];
 
