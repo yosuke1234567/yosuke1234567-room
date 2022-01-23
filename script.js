@@ -71,6 +71,7 @@ var peer = okTrigger.addEventListener('click', () => {
 
 
 async function main() {
+  const audioCtx = new AudioContext(); // AudioContextを作成
   const localVideo = document.getElementById('js-local-stream');
   const remoteVideos = document.getElementById('js-remote-streams');
   const localText = document.getElementById('js-local-text');
@@ -136,7 +137,6 @@ async function main() {
 
   // Register join handler
   joinTrigger.addEventListener('click', () => {
-    const audioCtx = new AudioContext();
     joinTrigger.style.display = 'none'
     leaveTrigger.style.visibility = 'visible'
     // Note that you need to ensure the peer has connected to signaling server
@@ -269,12 +269,10 @@ async function main() {
         mediaConnection.once('close', () => {
           p2pLog.textContent += `通話終了 : ${mediaConnection.remoteId}\n`;
           p2pLog.scrollBy(0, 100);
-          p2pStartTrigger.style.display = 'inline';
         });
         p2pCloseTrigger.addEventListener('click', () => {
           mediaConnection.close(true);
           p2pCloseTrigger.style.display = 'none';
-          p2pStartTrigger.style.display = 'inline';
         });
       });
     });
