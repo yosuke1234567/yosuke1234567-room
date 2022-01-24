@@ -154,7 +154,7 @@ async function main() {
 
     const room = peer.joinRoom(roomId.value, {
       mode: 'sfu',
-      stream: localStream,
+      stream: localStream
     });
 
     room.once('open', () => {
