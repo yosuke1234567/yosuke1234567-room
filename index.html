@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Web Conference</title>
+    <link rel="stylesheet" href="./assets/style.css">
+</head>
+
+<body>
+
+    <div id="js-dev-config-menu" class="devices">
+        <video id="js-config-video" playsinline muted></video>
+        <div class="av-select">
+            <label for="audio-source"><img src="./assets/images/mic_black_24dp.svg"></label>
+            <select id="audio-source"></select>
+        </div>
+        <div class="av-select">
+            <label for="video-source"><img src="./assets/images/videocam_black_24dp.svg"></label>
+            <select id="video-source"></select>
+        </div>
+    </div>
+
+    <div id="first" class="first">
+        <h2 class="welcome">Welcome</h2>
+        <input type="text" placeholder="ユーザー名" id="js-username">
+        <input type="text" placeholder="ルーム名" id="js-room-id">
+        <button id="js-ok-trigger">OK</button>
+    </div>
+
+    <div class="room">
+
+        <div class="remote-streams" id="js-remote-streams">
+            <div id="js-join-wrap">
+                <p>準備が整いましたら、「参加」を押してください。</p>
+                <button id="js-join-trigger">参加</button>
+            </div>
+        </div>
+
+        <div>
+            <video id="js-local-stream" playsinline muted></video>
+            <pre class="messages" id="js-messages"></pre>
+        </div>
+
+    </div>
+
+
+    <div class="bottom-bar">
+
+        <button id="js-leave-trigger">退出</button>
+
+        <div class="media-options">
+            <button id="js-toggle-camera"></button>
+            <button id="js-toggle-microphone"></button>
+        </div>
+
+        <div class="volume">
+            <label for="js-sound-settings">音響の変更</label>
+            <select id="js-sound-settings">
+                <option value="0">1</option>
+                <option value="1">2</option>
+                <option value="2">3</option>
+                <option value="3">4</option>
+                <option value="4">5</option>
+                <option value="5">6</option>
+                <option value="6">7</option>
+                <option value="7">8</option>
+            </select>
+        </div>
+
+        <div class="p2p-area">
+            <pre id="p2p-log"></pre>
+            <button id="p2p-close-trigger">切断</button>
+        </div>
+
+        <div class="chat">
+            <textarea placeholder="テキストチャット" id="js-local-text" disabled></textarea>
+            <button id="js-send-trigger" disabled>送信</button>
+        </div>
+
+    </div>
+
+
+    <script src="//cdn.webrtc.ecl.ntt.com/skyway-4.4.1.js"></script>
+    <script src="../_shared/key.js"></script>
+    <script src="./script.js"></script>
+</body>
+
+</html>

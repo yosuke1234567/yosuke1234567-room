@@ -1,0 +1,410 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #22222a;
+    font-family: "Segoe UI", "Helvetica Neue", "Yu Gothic Medium", "游ゴシック Medium", "YuGothic", "游ゴシック体", "メイリオ", sans-serif;
+}
+
+input,
+button,
+textarea,
+pre,
+select,
+option {
+    font-family: "Segoe UI", "Helvetica Neue", "Yu Gothic Medium", "游ゴシック Medium", "YuGothic", "游ゴシック体", "メイリオ", sans-serif;
+    font-size: 0.85rem;
+}
+
+button {
+    border-radius: 4px;
+    border: none;
+}
+
+button:active {
+    transform: translateY(1px);
+}
+button[disabled]:active {
+    transform: none;
+}
+
+button, select {
+    cursor: pointer;
+}
+
+input, select, textarea {
+    border-radius: 4px;
+}
+
+.first {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 40%;
+    background-color: #33333b;
+    border: 1px solid #555;
+}
+
+.first.hidden {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.2s, opacity 0.2s;
+}
+
+.welcome {
+    font-size: 1.5rem;
+    font-weight: normal;
+    color: #fff;
+    margin: 8px auto;
+}
+
+.first > input {
+    width: 70%;
+    margin: 12px auto;
+    padding: 12px 16px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 1px solid #666;
+    color: #fff;
+}
+
+.first > input:focus {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.first > input::placeholder {
+    color: #c0c0c0;
+    opacity: 1;
+}
+
+.first > button {
+    background-color: #394;
+    width: 70%;
+    padding: 10px 0;
+    border: 0;
+    border-radius: 3px;
+    margin: 20px auto 80px;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.devices {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 60%;
+    background-color: #22222a;
+    z-index: 1;
+}
+
+.devices.hidden {
+    visibility: hidden;
+    transform: translateX(-101%);
+    transition: visibility 0.5s, transform 0.5s;
+}
+
+.av-select {
+    position: relative;
+    margin: 8px auto;
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.av-select > label {
+    display: flex;
+    align-items: center;
+}
+
+.av-select img {
+    padding: 8px 0;
+}
+
+.av-select > select {
+    width: calc(100% - 40px);
+    padding: 12px 16px;
+    appearance: none;
+    background-color: transparent;
+    color: #fff;
+}
+
+.av-select::after {
+    content: url(../assets/images/arrow_drop_down_black_24dp.svg);
+    display: block;
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    width: 24px;
+    height: 24px;
+    pointer-events: none;
+}
+
+.av-select option {
+    background-color: #22222a;
+    font-size: 14px;
+}
+
+.devices video {
+    z-index: 1;
+    background-color: #111;
+    transform: scale(-1, 1);
+    width: 80%;
+    aspect-ratio: 16 / 9;
+    margin-bottom: 20px;
+}
+
+#js-join-wrap {
+    visibility: hidden;
+}
+
+#js-join-trigger {
+    background-color: #394;
+    font-size: 1.25rem;
+    width: 160px;
+    border-radius: 8px;
+    margin: 16px auto 0;
+    padding: 16px;
+    color: #fff;
+}
+
+#js-leave-trigger {
+    background-color: #f44;
+    height: 36px;
+    border: 0;
+    border-radius: 3px;
+    margin-left: 16px;
+    padding: 0 24px;
+    color: #fff;
+}
+
+.room {
+    display: grid;
+    grid-template-columns: 80% 20%;
+    margin: 24px 8px;
+}
+
+.remote-streams {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(30%, 1fr));
+    align-items: center;
+    background-color: #181818;
+    gap: 8px;
+    padding: 8px;
+    margin-right: 8px;
+    box-sizing: border-box;
+    color: #fff;
+    text-align: center;
+}
+
+.remote-container {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 640px;
+    aspect-ratio: 16 / 9;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.remote-container>div {
+    /*peerID*/
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding: 4px 10px;
+    background-color: rgba(0, 0, 0, .6);
+    color: #fff;
+}
+
+.remote-container>video {
+    width: 100%;
+}
+
+.p2p-start {
+    visibility: hidden;
+    opacity: 0;
+    width: 300px;
+    max-width: 50%;
+    padding: 8px 0;
+    margin: 0 auto;
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 30px;
+    border: 0;
+    border-radius: 8px;
+    background-color: #eee;
+    transition: opacity .2s;
+}
+
+.p2p-start:hover {
+    background-color: #c0c0c0;
+}
+
+.remote-container:hover .p2p-start {
+    visibility: visible;
+    opacity: 1;
+}
+
+#js-local-stream {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    transform: scale(-1, 1);
+    background-color: #181818;
+}
+
+.messages {
+    box-sizing: border-box;
+    width: 100%;
+    height: 280px;
+    background-color: #eee;
+    padding: 8px;
+    margin: 5px 0 0;
+}
+
+.msg-name {
+    color: #555;
+    font-size: .8em;
+}
+
+pre {
+    white-space: pre-wrap;
+    word-break: break-all;
+    overflow-y: auto;
+    text-align: left;
+}
+
+#p2p-close-trigger {
+    display: none;
+}
+
+.bottom-bar {
+    background-color: #33333b;
+    position: fixed;
+    bottom: 0;
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 960px;
+    max-height: 100px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 16px;
+    line-height: 0;
+    text-align: center;
+    color: #fff;
+}
+
+.media-options {
+    margin: 0 auto;
+    display: flex;
+}
+
+#js-toggle-camera,
+#js-toggle-microphone {
+    display: block;
+    height: 44px;
+    width: 44px;
+    margin: 0;
+    padding: 0;
+    border-radius: 50%;
+    background-color: #555;
+    background-repeat: no-repeat;
+    background-position: 50%;
+}
+
+#js-toggle-camera {
+    background-image: url(./images/videocam_black_24dp.svg);
+    margin-right: 16px;
+}
+#js-toggle-camera.off {
+    background-image: url(./images/videocam_off_white_24dp.svg);
+    background-color: transparent;
+    border: 1px solid #fff;
+}
+
+#js-toggle-microphone {
+    background-image: url(./images/mic_black_24dp.svg);
+}
+#js-toggle-microphone.off {
+    background-image: url(./images/mic_off_white_24dp.svg);
+    background-color: transparent;
+    border: 1px solid #fff;
+}
+
+.volume {
+    margin: 0 auto;
+}
+
+.volume > select {
+    padding: 6px 12px;
+    margin-left: 8px;
+    background-color: transparent;
+    color: #fff;
+}
+.volume option {
+    background-color: #33333b;
+    font-size: 14px;
+}
+
+.p2p-area {
+    display: flex;
+    margin: 0 auto;
+    width: 284px;
+}
+
+.p2p-area>button {
+    height: 36px;
+    margin: auto 2px;
+}
+
+#p2p-log {
+    text-align: left;
+    width: 210px;
+    height: 36px;
+    background-color: #555;
+    margin: auto 4px;
+    padding: 6px 8px;
+    word-break: break-all;
+    line-height: normal;
+}
+
+.chat {
+    display: flex;
+    margin: 0 16px 0 auto;
+}
+
+.chat>textarea {
+    width: 190px;
+    height: 36px;
+    resize: none;
+    margin: auto 4px;
+    padding: 6px 12px;
+    overflow: auto;
+}
+
+#js-send-trigger {
+    padding: 4px 12px;
+    background-color: #45b;
+    color: #fff;
+}
+
+#js-send-trigger[disabled] {
+    opacity: 0.7;
+    cursor: default;
+}
